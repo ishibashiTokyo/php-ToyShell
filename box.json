@@ -1,0 +1,8 @@
+{
+    "directories": ["src"],
+    "main": "src/shell.php",
+    "output": "build/webshell.phar.php",
+    "chmod": "0755",
+    "stub": true,
+    "shebang": false
+}
