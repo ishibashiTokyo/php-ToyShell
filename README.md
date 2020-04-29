@@ -1,25 +1,29 @@
 # web_shell
 
-簡易的な認証機能を持った PHP 製の Web シェル  
-SSH接続できない環境で作業を行うのに必要
-出来るだけ単一のファイルで動作するように開発していこうと思う。
+SSH 接続できない環境で作業を行うのに便利な PHP 製の Web シェル
+
+## 機能
+
+- Phar を使用した単一ファイルでの Web シェル
+- 簡易的なパスワード認証機能
+- IP アドレスを使用したアクセス制御機能
 
 ## 設置方法
 
-1. ビルドされた単一ファイルを設置して使用する場合
+1. ビルドされた単一ファイルを設置して使用する場合  
    build/webshell.phar.php をサーバー上の公開ディレクトリ内に設置してアクセス。
 
-1. 複数のファイルを設置して使用する場合
+1. 複数のファイルを設置して使用する場合  
    src/ 移行のファイル群を公開ディレクトリ内に設置してアクセス。
 
 ## 使い方
 
 当プログラムが個別に認識するコマンドについて
 
-- `clear`
+- `clear`  
   セッション変数のクリアを行います。  
   実際のシェルでは`clear`コマンドのプロセスは発行されていません。
-- `cd`
+- `cd`  
   当プログラムの都合上、カレントディレクトリの記録をセッション変数内に格納するため、  
   `cd`コマンドで指定されたパスをリアルパスに変換したうえで記録します。  
   実際のシェルでは`cd`コマンドのプロセスは発行されていません。
@@ -41,10 +45,12 @@ src/shell.php の設定項目について
 単一ファイルの実行には Phar を使用しています。
 
 Phar については以下の URL を参照  
-[PHP: Phar - Manual](https://www.php.net/manual/ja/book.phar.php)
+**PHP: Phar - Manual**  
+[https://www.php.net/manual/ja/book.phar.php](https://www.php.net/manual/ja/book.phar.php)
 
 Phar ビルド環境の整備については以下を参照  
-[Box](https://box-project.github.io/box2/)
+**Box Project**  
+[https://box-project.github.io/box2/](https://box-project.github.io/box2/)
 
 box.json があるディレクトリで以下のコマンドを実行
 
