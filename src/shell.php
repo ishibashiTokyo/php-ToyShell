@@ -1,6 +1,6 @@
 <?php
 /**
- * Web Shell
+ * Toy Shell
  *
  * A simple web shell made in PHP.
  *

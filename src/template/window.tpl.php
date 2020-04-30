@@ -33,9 +33,9 @@ if (! isset($Shell)) {
 </head>
 <body>
 <pre>
-    ╦ ╦┌─┐┌┐   ╔═╗┬ ┬┌─┐┬  ┬
-    ║║║├┤ ├┴┐  ╚═╗├─┤├┤ │  │
-    ╚╩╝└─┘└─┘  ╚═╝┴ ┴└─┘┴─┘┴─┘
+    ╔╦╗┌─┐┬ ┬  ╔═╗┬ ┬┌─┐┬  ┬
+     ║ │ │└┬┘  ╚═╗├─┤├┤ │  │
+     ╩ └─┘ ┴   ╚═╝┴ ┴└─┘┴─┘┴─┘
     *Cannot execute interactive command.
 </pre>
     <?php echo $_SESSION['webshell']['history']; ?>

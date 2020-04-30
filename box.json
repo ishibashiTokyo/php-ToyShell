@@ -1,7 +1,7 @@
 {
     "directories": ["src"],
     "main": "src/shell.php",
-    "output": "build/webshell.phar.php",
+    "output": "build/ToyShell.phar.php",
     "chmod": "0755",
     "stub": true,
     "shebang": false
