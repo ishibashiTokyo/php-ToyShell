@@ -4,7 +4,7 @@
  *
  * A simple web shell made in PHP.
  *
- * @since 1.0.1
+ * @since 1.0.2
  * @link  https://saku.fun/
  */
 ini_set('log_errors', '0');
@@ -13,16 +13,18 @@ error_reporting(E_ALL);
 session_start();
 
 require_once 'class/AccessRestrictions.class.inc.php';
+
+require_once 'class/Commands.class.ext.php';
 require_once 'class/Shell.class.inc.php';
 include_once 'config/config.inc.php';
 
-$Shell = new ishibashiTokyo\Shell;
-$AR = new ishibashiTokyo\AccessRestrictions($conf);
-
-$AR::IpRestriction();
-$AR::SimpleAuth();
+// Access Restrictions
+ishibashiTokyo\AccessRestrictions::Setting($conf);
+ishibashiTokyo\AccessRestrictions::IpRestriction();
+ishibashiTokyo\AccessRestrictions::SimpleAuth();
 
 // Initialize
+$Shell = new ishibashiTokyo\Shell;
 $Shell->SessionInit();
 
 if (isset($_POST['cmd'])) {
@@ -35,7 +37,7 @@ if (isset($_POST['cmd'])) {
     }
 
     // Update current directory.
-    if (preg_match("/^cd\s/i", $cmd)) {
+    if (preg_match("/^cd\s/i", $cmd) || preg_match("/^cd$/i", $cmd)) {
         $Shell->Cmd_cd($cmd);
         exit();
     }
@@ -45,4 +47,4 @@ if (isset($_POST['cmd'])) {
 }
 
 // View
-require 'template/window.tpl.php';
+require BASE_PATH . '/template/window.tpl.php';

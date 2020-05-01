@@ -5,12 +5,12 @@ class AccessRestrictions
 {
     static $conf = array();
 
-    function __construct($conf)
+    static public function Setting($conf)
     {
         self::$conf = $conf;
     }
 
-    static public function IpRestriction(): void
+    static public function IpRestriction()
     {
         if (! self::$conf['IP_restriction']['valid']) {
             return;
@@ -23,7 +23,7 @@ class AccessRestrictions
     }
 
     // Authentication process
-    static public function SimpleAuth(): void
+    static public function SimpleAuth()
     {
         if (! self::$conf['simple_auth']['valid']) {
             return;
@@ -33,8 +33,8 @@ class AccessRestrictions
             $_SESSION['webshell_auth'] = md5(trim($_POST['user'] . ':' . $_POST['passwd']));
         }
 
-        if (empty($_SESSION['webshell_auth'])
-            || $_SESSION['webshell_auth'] !== md5(self::$conf['simple_auth']['user'] . ':' . self::$conf['simple_auth']['password'])) {
+        $_hash = md5(self::$conf['simple_auth']['user'] . ':' . self::$conf['simple_auth']['password']);
+        if (empty($_SESSION['webshell_auth']) || $_SESSION['webshell_auth'] !== $_hash) {
             require BASE_PATH . '/template/login.tpl.php';
             exit();
         }

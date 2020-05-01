@@ -26,9 +26,25 @@ if (! isset($Shell)) {
         }
     </style>
     <script>
+        // auto scroll
         var element = document.documentElement;
         var bottom = element.scrollHeight - element.clientHeight;
         window.scroll(0, bottom);
+
+        // debuginfo
+        <?php
+        ob_start();
+        echo '!POST' . PHP_EOL;
+        var_dump($_POST);
+        echo '!SESSION' . PHP_EOL;
+        var_dump($_SESSION);
+        $dump = ob_get_contents();
+        ob_end_clean();
+        $dump = str_replace('\'', '"', $dump);
+        $dump = preg_replace("/\r\n|\r|\n/", '\n', $dump)
+        ?>
+
+        console.log('[debug]\n<?php echo $dump; ?>');
     </script>
 </head>
 <body>
