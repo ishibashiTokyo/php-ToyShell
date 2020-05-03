@@ -10,20 +10,7 @@ if (! isset($Shell)) {
     <meta charset="UTF-8">
     <title>WEB SHELL</title>
     <style>
-        * {
-            color: #c8d8c0;
-            font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
-            font-size: 14px;
-            line-height: 1.2;
-        }
-        body {
-            background-color: #322539;
-        }
-        input {
-            border: none;
-            outline: none;
-            background-color: transparent;
-        }
+<?php include 'template/window.css'; ?>
     </style>
     <script>
         // auto scroll
@@ -54,17 +41,34 @@ if (! isset($Shell)) {
      ╩ └─┘ ┴   ╚═╝┴ ┴└─┘┴─┘┴─┘
     *Cannot execute interactive command.
 </pre>
-    <?php echo $_SESSION['webshell']['history']; ?>
+<div id="history">
+<?php echo $_SESSION['webshell']['history']; ?>
+</div>
     <form method="POST">
     <?php
         printf(
-            '[%s@%s %s] $ ' . PHP_EOL,
+            '[%s@%s %s]' . PHP_EOL,
             $_SESSION['webshell']['sys_user'],
             $_SERVER['SERVER_ADDR'],
             $_SESSION['webshell']['path']
         );
     ?>
-        <input autofocus type="text" name="cmd">
+    <br>
+
+    <table>
+        <tr>
+            <td>$ </td>
+            <td style="width: 100%;"><input autofocus type="text" id="cmd" name="cmd" autocomplete="on" list="cmd-list"></td>
+        </tr>
+    </table>
+
+    <datalist id="cmd-list">
+        <?php
+        foreach ($conf['command_list'] as $key => $value) {
+            printf('<option value="%s">%s</option>', $value, $key);
+        }
+        ?>
+    </datalist>
     </form>
 </body>
 </html>

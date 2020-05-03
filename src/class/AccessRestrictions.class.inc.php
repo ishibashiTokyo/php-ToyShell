@@ -35,7 +35,7 @@ class AccessRestrictions
 
         $_hash = md5(self::$conf['simple_auth']['user'] . ':' . self::$conf['simple_auth']['password']);
         if (empty($_SESSION['webshell_auth']) || $_SESSION['webshell_auth'] !== $_hash) {
-            require BASE_PATH . '/template/login.tpl.php';
+            require 'template/login.tpl.php';
             exit();
         }
     }

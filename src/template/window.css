@@ -1,0 +1,19 @@
+* {
+  color: #c8d8c0;
+  font-family: Consolas, "Courier New", Courier, Monaco, monospace;
+  font-size: 14px;
+  line-height: 1.2;
+}
+body {
+  background-color: #322539;
+}
+#cmd {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+#history {
+  white-space: pre-wrap;
+}
