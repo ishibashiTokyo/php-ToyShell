@@ -1,12 +1,23 @@
 * {
-  color: #c8d8c0;
+  color: #abb2bf;
   font-family: Consolas, "Courier New", Courier, Monaco, monospace;
   font-size: 14px;
   line-height: 1.2;
 }
 body {
-  background-color: #322539;
+  background-color: #282c34;
 }
+
+.code {
+  white-space: pre-wrap;
+  padding: 0em !important;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 #cmd {
   width: 100%;
   border: none;
@@ -14,6 +25,7 @@ body {
   background-color: transparent;
   box-sizing: border-box;
 }
-#history {
-  white-space: pre-wrap;
+.clr-61aeee {
+  padding: 0;
+  color: #61aeee;
 }
