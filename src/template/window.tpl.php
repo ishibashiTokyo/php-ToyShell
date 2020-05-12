@@ -69,7 +69,7 @@ if (! isset($Shell)) {
 <table>
     <tr>
         <td class="clr-61aeee">$&nbsp;</td>
-        <td style="width: 100%;"><input autofocus type="text" id="cmd" name="cmd" autocomplete="on" list="cmd-list"></td>
+        <td style="width: 100%;"><input type="text" id="cmd" name="cmd" autocomplete="on" list="cmd-list" autofocus></td>
     </tr>
 </table>
 

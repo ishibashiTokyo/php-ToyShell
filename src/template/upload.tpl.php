@@ -1,3 +1,9 @@
+<?php
+if (! isset($Shell)) {
+    header("HTTP/1.0 404 Not Found");
+    exit();
+}
+?>
 <script>
   // D&D upload form
   document.addEventListener("DOMContentLoaded", function () {

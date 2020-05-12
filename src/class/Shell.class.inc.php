@@ -143,4 +143,45 @@ class Shell extends Commands
         exit();
     }
 
+
+    public function Edit($path)
+    {
+        $path = urldecode($path);
+        // ファイルに読み込み権限がない場合
+        if (!is_readable($path)) {
+            die($path);
+        }
+
+        $data = file_get_contents($path);
+
+        require 'template/editor.tpl.php';
+        exit();
+    }
+
+    public function Update($_update_option)
+    {
+        $this->History_CurrentDirectory();
+        $this->History_Command('update');
+
+        $stamp = filemtime($_update_option['path']);
+        if (file_put_contents($_update_option['path'], $_update_option['data']) === false) {
+            $this->History_Result('ファイルを保存できませんでした。権限を確認してください。: ' . $_update_option['path']);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        }
+
+        $this->History_Result('ファイルを保存しました: ' . $_update_option['path']);
+
+        if ($_update_option['touch']) {
+            if (touch($_update_option['path'], $stamp)) {
+                $this->History_Result('最終更新のタイムスタンプを戻しました');
+            }
+            else {
+                $this->History_Result('最終更新のタイムスタンプを戻せませんでした。権限を確認して下さい。');
+            }
+        }
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
 }

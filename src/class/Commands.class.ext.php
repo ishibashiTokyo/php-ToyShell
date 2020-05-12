@@ -75,9 +75,10 @@ class Commands
         foreach ($files as $file) {
             $files_pattern[] = '/\s' . $file . '/';
             $replacement[] = sprintf(
-                ' <a href="?download=%s">%s</a>',
+                ' <a href="?download=%s">%s</a> - <a href="?edit=%s">Edit</a>',
                 urlencode($_path . '/' . $file),
-                $file
+                $file,
+                urlencode($_path . '/' . $file)
             );
         }
 
