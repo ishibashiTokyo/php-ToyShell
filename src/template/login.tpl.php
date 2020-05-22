@@ -1,9 +1,3 @@
-<?php
-if (! isset($Shell)) {
-    header("HTTP/1.0 404 Not Found");
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

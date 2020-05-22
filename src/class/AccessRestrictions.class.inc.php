@@ -16,7 +16,7 @@ class AccessRestrictions
             return;
         }
 
-        if ( array_search($_SERVER['REMOTE_ADDR'], self::$conf['IP_restriction']['IPs']) === false) {
+        if (! in_array($_SERVER['REMOTE_ADDR'], self::$conf['IP_restriction']['IPs'], true)) {
             header("HTTP/1.0 404 Not Found");
             exit();
         }
@@ -35,7 +35,7 @@ class AccessRestrictions
 
         $_hash = md5(self::$conf['simple_auth']['user'] . ':' . self::$conf['simple_auth']['password']);
         if (empty($_SESSION['webshell_auth']) || $_SESSION['webshell_auth'] !== $_hash) {
-            require 'template/login.tpl.php';
+            include Path::file('template/login.tpl.php');
             exit();
         }
     }

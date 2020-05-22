@@ -13,7 +13,7 @@ if (! isset($Shell)) {
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/styles/atom-one-dark-reasonable.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
     <style>
-<?php include 'template/window.css'; ?>
+<?php include ishibashiTokyo\Path::file('template/window.css'); ?>
     </style>
     <script>
         // highlight
@@ -82,7 +82,7 @@ if (! isset($Shell)) {
 </datalist>
 </form>
 
-<?php include 'template/upload.tpl.php'; ?>
+<?php include_once ishibashiTokyo\Path::file('template/upload.tpl.php'); ?>
 
 </body>
 </html>

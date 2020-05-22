@@ -15,5 +15,3 @@ $conf = array(
         'MySQL - Dump' => 'mysqldump --single-transaction --events --skip-lock-tables -u {USER} -p{PASSWORD} {DATABASE_NAME} | gzip > dump-data.sql.gz'
     )
 );
-
-define('BASE_PATH', realpath(__DIR__ . '/../'));

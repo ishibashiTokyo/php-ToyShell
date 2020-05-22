@@ -154,7 +154,7 @@ class Shell extends Commands
 
         $data = file_get_contents($path);
 
-        require 'template/editor.tpl.php';
+        include Path::file('template/editor.tpl.php');
         exit();
     }
 

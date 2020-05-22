@@ -4,7 +4,7 @@
  *
  * A simple web shell made in PHP.
  *
- * @since 1.0.6
+ * @since 1.0.7
  * @link  https://saku.fun/
  */
 ini_set('log_errors', '0');
@@ -12,8 +12,8 @@ ini_set('display_errors', '1');
 error_reporting(E_ALL);
 session_start();
 
+require_once 'class/Path.class.inc.php';
 require_once 'class/AccessRestrictions.class.inc.php';
-
 require_once 'class/Commands.class.ext.php';
 require_once 'class/Shell.class.inc.php';
 include_once 'config/config.inc.php';
@@ -83,4 +83,4 @@ if (isset($_POST['cmd'])) {
 }
 
 // View
-require 'template/window.tpl.php';
+require ishibashiTokyo\Path::file('template/window.tpl.php');
