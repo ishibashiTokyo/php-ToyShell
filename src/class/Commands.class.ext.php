@@ -67,7 +67,8 @@ class Commands
         $exec_cmd = sprintf('cd %s ; ls -la', $_path);
         $_resulet = mb_convert_encoding(shell_exec($exec_cmd), 'UTF-8');
 
-        $files = array_filter(glob($_path . '/' . "*.*"), 'is_file');
+        // globで隠しファイルも取得して.や..を無視する
+        $files = array_filter(glob($_path . '/{*,.[!.]*,..?*}', GLOB_BRACE), 'is_file');
         $files = array_map('basename', $files);
 
         $files_pattern = array();
